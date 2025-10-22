@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookWell – Rezepte finden leicht gemacht</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand"><div class="logo">🍳</div> CookWell</div>
+      <nav style="margin-left:auto;display:flex;gap:6px">
+        <a href="#home" data-link class="active">Start</a>
+        <a href="#builder" data-link>Zutaten</a>
+        <a href="#swipe" data-link>Rezepte</a>
+        <a href="#saved" data-link>Favoriten</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Start -->
+    <section id="home" role="route" class="active">
+      <div class="hero">
+        <div>
+          <span class="badge">Weniger Food-Waste • Mehr Inspiration</span>
+          <h1>Tinder für Rezepte – <span class="highlight">wir matchen dich und dein Essen</span></h1>
+          <p class="lead">Wähle deine Zutaten, filtere nach Zeit/Schwierigkeit/Ernährung und wische durch passende Vorschläge. Speichere Favoriten und sende sie dir per Mail.</p>
+          <div class="cta">
+            <button class="btn btn-primary" data-goto="builder">Jetzt Zutaten auswählen</button>
+            <button class="btn btn-ghost" data-goto="swipe">Direkt Rezepte ansehen</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="head"><strong>So funktioniert’s</strong><span>1–2–3</span></div>
+          <div class="body">
+            <ol style="margin:0; padding-left:18px">
+              <li>Zutaten eingeben/anklicken</li>
+              <li>Filter setzen</li>
+              <li>Links = überspringen, Rechts = merken</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zutaten-Builder -->
+    <section id="builder" role="route">
+      <div class="panel">
+        <div class="head">
+          <strong>Deine Zutaten</strong>
+          <div class="actions">
+            <button class="btn" id="clearIngredients">Leeren</button>
+            <button class="btn btn-primary" id="toSwipe">Rezepte finden</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="input-row">
+            <input id="ingredientInput" type="text" placeholder="Zutat eingeben, Enter = hinzufügen (Kommas/Zeilen erlaubt)">
+            <button class="btn" id="addIngredient">Hinzufügen</button>
+          </div>
+
+          <div class="chips" id="ingredientChips"></div>
+
+          <div class="selected-box">
+            <h4>Ausgewählte Zutaten</h4>
+            <div class="chips" id="selectedChips"></div>
+          </div>
+
+          <!-- NEU: Match-Optionen -->
+          <div class="matchbox">
+            <label class="match-title">Treffer-Option</label>
+            <div class="match-toggle">
+              <label class="radio">
+                <input type="radio" name="matchMode" value="strict" checked>
+                <span>Nur Rezepte, die <b>alle</b> ausgewählten Zutaten enthalten</span>
+              </label>
+              <label class="radio">
+                <input type="radio" name="matchMode" value="partial">
+                <span>Rezepte, die <b>mindestens eine</b> ausgewählte Zutat enthalten</span>
+              </label>
+            </div>
+          </div>
+
+          <h3 class="mt">Filter</h3>
+          <div class="filters">
+            <div class="filter">
+              <label>Max. Zeit (Min.)</label>
+              <input type="range" id="fTime" min="5" max="120" step="5" value="30" oninput="document.getElementById('fTimeVal').textContent=this.value">
+              <div><b><span id="fTimeVal">30</span> Min</b></div>
+            </div>
+            <div class="filter">
+              <label>Schwierigkeit</label>
+              <select id="fDifficulty">
+                <option value="any">egal</option><option>leicht</option><option>mittel</option><option>schwer</option>
+              </select>
+            </div>
+            <div class="filter">
+              <label>Ernährung</label>
+              <select id="fDiet">
+                <option value="any">egal</option>
+                <option value="vegetarisch">vegetarisch</option>
+                <option value="vegan">vegan</option>
+                <option value="omnivor">omnivor</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Swipe-Deck -->
+    <section id="swipe" role="route">
+      <div class="panel">
+        <div class="head">
+          <strong>Rezepte</strong>
+          <div class="actions">
+            <button class="btn" id="resetDeck">Neu mischen</button>
+            <button class="btn btn-primary" data-goto="saved">Favoriten ansehen</button>
+          </div>
+        </div>
+        <div class="body">
+          <div class="deck" id="deck"></div>
+          <div class="empty-state" id="emptyState" style="display:none">
+            <div>
+              <h3>Keine Treffer 😔</h3>
+              <p>Erweitere deine Zutaten oder lockere die Filter.</p>
+              <div class="empty-actions">
+                <button class="btn" id="btnToChefkoch">Auf Chefkoch suchen</button>
+                <button class="btn" id="btnToGoogle">Google-Suche öffnen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Favoriten -->
+    <section id="saved" role="route">
+      <div class="panel">
+        <div class="head">
+          <strong>Gespeicherte Rezepte</strong>
+          <div class="actions"><button class="btn" id="sendEmail">Per E-Mail senden</button></div>
+        </div>
+        <div class="body">
+          <div class="list" id="savedList"></div>
+          <p id="savedEmpty" class="muted">Noch nichts gespeichert. Wische nach rechts, um Rezepte zu merken.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> CookWell • Demo-SPA (HTML/CSS/JS)</footer>
+
+  <!-- Scripts -->
+  <script src="app.js" defer></script>
+</body>
+</html>
