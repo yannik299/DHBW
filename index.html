@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+  <!-- optional SEO und Metadaten -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CookWell – Rezepte finden leicht gemacht</title>
+  <meta name="keywords" content="Food, Cook, Recipes, Fridge, Pan, Leber" />
+  <meta name="application-name" content="CookWell" />
+  <meta name="description" content="Tinder für Rezepte" />
+  <meta name="author" content="Amelie, Finn, Pia, Yannik, Zeynep" />
+  <title> CookWell: Rezepte finden leicht gemacht </title>
 
-  <!-- Fonts -->
+  <!-- wichtige Info für Browser, so schnell wie möglich fonts holen -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
+  
+  <!-- Styles mapping -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header class="nav">
     <div class="nav-inner">
+      <!-- css styling durch class tags -->
       <div class="brand"><div class="logo">🍳</div> CookWell</div>
       <nav style="margin-left:auto;display:flex;gap:6px">
         <a href="#home" data-link class="active">Start</a>
@@ -27,32 +35,24 @@
   </header>
 
   <main class="container">
-    <!-- Start -->
+    <!-- Start/Home -->
+    <!-- route für Page Anzeigen Filter und eventlistener über JS -->
     <section id="home" role="route" class="active">
       <div class="hero">
         <div>
+          <h1 style="margin-bottom: 0;">Tinder für Rezepte</h1>
+          <h2 style="margin-top: 0;"><span class="highlight">wir matchen dich und dein Essen</span></h2>
           <span class="badge">Weniger Food-Waste • Mehr Inspiration</span>
-          <h1>Tinder für Rezepte – <span class="highlight">wir matchen dich und dein Essen</span></h1>
           <p class="lead">Wähle deine Zutaten, filtere nach Zeit/Schwierigkeit/Ernährung und wische durch passende Vorschläge. Speichere Favoriten und sende sie dir per Mail.</p>
           <div class="cta">
             <button class="btn btn-primary" data-goto="builder">Jetzt Zutaten auswählen</button>
             <button class="btn btn-ghost" data-goto="swipe">Direkt Rezepte ansehen</button>
           </div>
         </div>
-        <div class="panel">
-          <div class="head"><strong>So funktioniert’s</strong><span>1–2–3</span></div>
-          <div class="body">
-            <ol style="margin:0; padding-left:18px">
-              <li>Zutaten eingeben/anklicken</li>
-              <li>Filter setzen</li>
-              <li>Links = überspringen, Rechts = merken</li>
-            </ol>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- Zutaten-Builder -->
+    <!-- Zutaten/builder -->
     <section id="builder" role="route">
       <div class="panel">
         <div class="head">
@@ -62,34 +62,18 @@
             <button class="btn btn-primary" id="toSwipe">Rezepte finden</button>
           </div>
         </div>
+
         <div class="body">
           <div class="input-row">
             <input id="ingredientInput" type="text" placeholder="Zutat eingeben, Enter = hinzufügen (Kommas/Zeilen erlaubt)">
             <button class="btn" id="addIngredient">Hinzufügen</button>
           </div>
-
-          <div class="chips" id="ingredientChips"></div>
-
+          <div class="chips" id="ingredientChips"></div>  <!-- mit dropdown ersetzen, js edit |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
           <div class="selected-box">
             <h4>Ausgewählte Zutaten</h4>
             <div class="chips" id="selectedChips"></div>
           </div>
-
-          <!-- NEU: Match-Optionen -->
-          <div class="matchbox">
-            <label class="match-title">Treffer-Option</label>
-            <div class="match-toggle">
-              <label class="radio">
-                <input type="radio" name="matchMode" value="strict" checked>
-                <span>Nur Rezepte, die <b>alle</b> ausgewählten Zutaten enthalten</span>
-              </label>
-              <label class="radio">
-                <input type="radio" name="matchMode" value="partial">
-                <span>Rezepte, die <b>mindestens eine</b> ausgewählte Zutat enthalten</span>
-              </label>
-            </div>
-          </div>
-
+          <!-- Filter Section -->
           <h3 class="mt">Filter</h3>
           <div class="filters">
             <div class="filter">
@@ -113,11 +97,24 @@
               </select>
             </div>
           </div>
+          <div class="matchbox">
+            <label class="match-title">Treffer-Option</label>
+            <div class="match-toggle">
+              <label class="radio">
+                <input type="radio" name="matchMode" value="strict" checked>
+                <span>Nur Rezepte, die <b>alle</b> ausgewählten Zutaten enthalten</span>
+              </label>
+              <label class="radio">
+                <input type="radio" name="matchMode" value="partial">
+                <span>Rezepte, die <b>mindestens eine</b> ausgewählte Zutat enthalten</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Swipe-Deck -->
+    <!-- Rezepte/swipe -->
     <section id="swipe" role="route">
       <div class="panel">
         <div class="head">
@@ -143,7 +140,7 @@
       </div>
     </section>
 
-    <!-- Favoriten -->
+    <!-- Favoriten/saved -->
     <section id="saved" role="route">
       <div class="panel">
         <div class="head">
